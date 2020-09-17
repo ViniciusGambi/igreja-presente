@@ -42,14 +42,27 @@ export const Content = styled.div`
   width: 100%;
   max-width: 608px;
 
+  .row-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+  }
+
   h1 {
     margin-left: 32px;
-    margin-top: 32px;
     font-size: 32px;
   }
 
+  h4 {
+    margin-top: 32px;
+    margin-left: 32px;
+    font-size: 16px;
+  }
+
   hr {
-    margin: 16px 0 20px 0;
+    margin: 10px 0 20px 0;
     width: 100%;
     border: 1px solid ${mainColor};
   }

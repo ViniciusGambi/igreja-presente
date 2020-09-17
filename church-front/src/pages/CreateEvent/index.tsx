@@ -1,8 +1,8 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Button from '../../components/FormButton';
 import { Container, Content } from './styles';
 import Input from '../../components/Input';
@@ -11,6 +11,8 @@ import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
+import { getformatedDate } from '../../utils/dateUtils';
 
 interface CreateEventFormData {
   name: string;
@@ -19,11 +21,49 @@ interface CreateEventFormData {
   time: string;
 }
 
+interface EditEventFormData {
+  id: string;
+  name: string;
+  max_reservations: number;
+  date: Date;
+}
+
 const CreateEvent: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
+  const formRef = useRef<FormHandles>({} as FormHandles);
   const { addToast } = useToast();
   const { token } = useAuth();
   const history = useHistory();
+  const { eventId } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(!!eventId);
+
+  useEffect(() => {
+    if (eventId) {
+      api
+        .get(`events/${eventId}`)
+        .then(response => {
+          const event = response.data;
+          const date = new Date(event.date);
+
+          if (formRef !== null) {
+            formRef.current.setFieldValue('name', event.name);
+            formRef.current.setFieldValue(
+              'max_reservations',
+              event.max_reservations,
+            );
+            formRef.current.setFieldValue(
+              'date',
+              date.toISOString().split('T')[0],
+            );
+            formRef.current.setFieldValue(
+              'time',
+              date.toTimeString().split(' ')[0].substring(0, 5),
+            );
+          }
+          setIsLoading(false);
+        })
+        .catch(err => console.log(err));
+    }
+  }, [eventId]);
 
   const createEvent = async (data: Omit<CreateEventFormData, 'time'>) => {
     const event = await api.post('/events', data, {
@@ -31,6 +71,24 @@ const CreateEvent: React.FC = () => {
         Authorization: `Bearer ${token}`,
       },
     });
+    return event;
+  };
+
+  const editEvent = async ({
+    id,
+    name,
+    max_reservations,
+    date,
+  }: EditEventFormData) => {
+    const event = await api.patch(
+      `events/${id}`,
+      { id, name, max_reservations, date },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
     return event;
   };
 
@@ -66,11 +124,29 @@ const CreateEvent: React.FC = () => {
         );
 
         const fullDate = parseDatetime(date, time);
-        const event = await createEvent({
-          name,
-          max_reservations,
-          date: fullDate,
-        });
+
+        if (!eventId) {
+          await createEvent({
+            name,
+            max_reservations,
+            date: fullDate,
+          });
+          addToast({
+            type: 'success',
+            title: 'Evento criado com sucesso.',
+          });
+        } else {
+          await editEvent({
+            id: eventId,
+            name,
+            max_reservations,
+            date: fullDate,
+          });
+          addToast({
+            type: 'success',
+            title: 'Alteração feita com sucesso.',
+          });
+        }
         history.push('/admin');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -85,17 +161,17 @@ const CreateEvent: React.FC = () => {
         }
       }
     },
-    [addToast, history],
+    [addToast, history, createEvent],
   );
 
   return (
     <>
       <Header />
-      <Container>
+      <Container isLoading={isLoading}>
         <Content>
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Informações Básicas</h1>
-            <h4>O arroz com feijão para descrever o seu evento</h4>
+            <h4>As informações principais do seu evento</h4>
             <Input name="name" placeholder="Nome do evento" />
             <Input
               name="max_reservations"
@@ -108,11 +184,14 @@ const CreateEvent: React.FC = () => {
             <Input name="time" placeholder="Hora" type="time" />
 
             <div className="buttonLine">
-              <Button type="submit">Criar evento</Button>
+              <Button type="submit">
+                {eventId ? 'Salvar Evento' : 'Criar evento'}
+              </Button>
             </div>
           </Form>
         </Content>
       </Container>
+      {isLoading && <Loading />}
     </>
   );
 };

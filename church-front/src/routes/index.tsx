@@ -19,7 +19,18 @@ const Routes: React.FC = () => (
       exact
       isPrivate
     />
-    <Route path="/admin/create/event" component={CreateEvent} exact isPrivate />
+    <Route
+      path="/admin/events/:eventId/edit"
+      component={CreateEvent}
+      exact
+      isPrivate
+    />
+    <Route
+      path="/admin/events/create"
+      component={CreateEvent}
+      exact
+      isPrivate
+    />
     <Route path="/:churchId" component={Dashboard} exact />
   </Switch>
 );

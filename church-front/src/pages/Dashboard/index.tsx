@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useParams } from 'react-router-dom';
+import Loading from '../../components/Loading';
 import Header from '../../components/DashboardHeader';
 import Card from '../../components/Card';
 import { Container, Title } from './styles';
@@ -49,13 +50,12 @@ const Dashboard: React.FC = () => {
   const [reservingEvent, setReservingEvent] = useState<EventProps>(
     {} as EventProps,
   );
-  console.log(church);
 
   useEffect(() => {
     async function loadData(): Promise<void> {
       try {
         const [loadedEvents, loadedChurch] = await Promise.all([
-          api.get(`events/${churchId}`),
+          api.get(`events/churchs/${churchId}`),
           api.get(`churchs/${churchId}`),
         ]);
         setEvents(loadedEvents.data);
@@ -108,7 +108,7 @@ const Dashboard: React.FC = () => {
       </Modal>
     </Container>
   ) : (
-    <h1>Loading..</h1>
+    <Loading />
   );
 };
 

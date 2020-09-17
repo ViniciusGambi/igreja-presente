@@ -5,6 +5,7 @@ import api from '../../services/api';
 import { Container, Content } from './styles';
 import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 
 interface LoginFormData {
   email: string;
@@ -24,36 +25,41 @@ const SignIn: React.FC = () => {
   const history = useHistory();
 
   const [events, setEvents] = useState<EventProps[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    api.get(`events/${church.id}`).then(response => {
+    api.get(`events/churchs/${church.id}`).then(response => {
       setEvents(response.data);
+      setIsLoading(false);
     });
-  }, []);
+  }, [church.id]);
 
   return (
     <>
       <Header />
       <Container>
-        <Content>
-          <h1>Eventos</h1>
-          <hr />
-          <div className="buttonLine">
-            <Link to="admin/create/event">
-              <Button>Criar evento</Button>
-            </Link>
-          </div>
-          {events.map(event => (
-            <div
-              key={event.id}
-              className="eventCard"
-              onClick={() => history.push(`admin/events/${event.id}/list`)}
-            >
-              {event.name}
+        {!isLoading && (
+          <Content>
+            <h1>Eventos</h1>
+            <hr />
+            <div className="buttonLine">
+              <Link to="admin/events/create">
+                <Button>Criar evento</Button>
+              </Link>
             </div>
-          ))}
-        </Content>
+            {events.map(event => (
+              <div
+                key={event.id}
+                className="eventCard"
+                onClick={() => history.push(`/admin/events/${event.id}/list`)}
+              >
+                {event.name}
+              </div>
+            ))}
+          </Content>
+        )}
       </Container>
+      {isLoading && <Loading />}
     </>
   );
 };

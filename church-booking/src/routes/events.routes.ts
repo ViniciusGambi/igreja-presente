@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import CreateEventService from '../services/CreateEventService';
+import EditEventService from '../services/EditEventService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import Church from '../models/Church';
 import Event from '../models/Event';
@@ -9,8 +9,36 @@ import AppError from '../errors/AppError';
 
 const eventsRouter = Router();
 
+eventsRouter.delete('/:id', async (request: Request, response: Response) => {
+  const { id } = request.params;
+
+  const eventsRepository = getRepository(Event);
+  const event = await eventsRepository.findOne({ where: { id } });
+
+  if (!event) {
+    throw new AppError('Event not exists');
+  }
+
+  await eventsRepository.delete(event);
+
+  return response.status(204).send();
+});
+
+eventsRouter.get('/:id', async (request: Request, response: Response) => {
+  const { id } = request.params;
+
+  const eventsRepository = getRepository(Event);
+  const event = await eventsRepository.findOne({ where: { id } });
+
+  if (!event) {
+    throw new AppError('Event not exists');
+  }
+
+  return response.json(event);
+});
+
 eventsRouter.get(
-  '/:church_id',
+  '/churchs/:church_id',
   async (request: Request, response: Response) => {
     const { church_id } = request.params;
 
@@ -42,14 +70,16 @@ eventsRouter.get(
   },
 );
 
-eventsRouter.post(
-  '/',
+eventsRouter.patch(
+  '/:id',
   ensureAuthenticated,
   async (request: Request, response: Response) => {
+    const { id } = request.params;
     const { name, date, max_reservations } = request.body;
     const church_id = request.user.id;
-    const createEventService = new CreateEventService();
-    const event = await createEventService.execute({
+    const editEventService = new EditEventService();
+    const event = await editEventService.execute({
+      id,
       name,
       date,
       church_id,

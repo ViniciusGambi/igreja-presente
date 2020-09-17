@@ -1,11 +1,21 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { mainColor } from '../../assets/colors';
 
 interface TitleProps {
   color?: string;
 }
 
+const appear = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 export const Container = styled.div`
+  animation: ${appear} 1s;
   font-size: 16px;
   flex-wrap: nowrap;
   overflow-x: auto;
