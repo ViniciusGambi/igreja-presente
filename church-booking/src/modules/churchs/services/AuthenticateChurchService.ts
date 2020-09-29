@@ -1,10 +1,10 @@
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 import Church from '../infra/typeorm/entities/Church';
 import IChurchsRepository from '../repositories/IChurchsRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   idOrEmail: string;
@@ -21,6 +21,8 @@ class AuthenticateChurchService {
   constructor(
     @inject('ChurchsRepository')
     private churchsRepository: IChurchsRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({ idOrEmail, password }: IRequest): Promise<IResponse> {
@@ -30,7 +32,10 @@ class AuthenticateChurchService {
       throw new AppError('Invalid email/password combination.', 401);
     }
 
-    const passwordMatched = await compare(password, church.password);
+    const passwordMatched = await this.hashProvider.compareHash(
+      password,
+      church.password,
+    );
 
     if (!passwordMatched) {
       throw new AppError('Invalid email/password combination.', 401);

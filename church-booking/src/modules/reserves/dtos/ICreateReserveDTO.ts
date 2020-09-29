@@ -1,4 +1,6 @@
+import ReserveGroup from '../infra/typeorm/entities/ReserveGroup';
+
 export default interface ICreateReserveDTO {
-  reserve_group_id: string;
+  reserve_group: ReserveGroup;
   name: string;
 }

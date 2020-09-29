@@ -13,7 +13,7 @@ interface IRequest {
 }
 
 @injectable()
-class EditEventService {
+class UpdateEventService {
   constructor(
     @inject('ChurchsRepository')
     private churchsRepository: IChurchsRepository,
@@ -40,12 +40,6 @@ class EditEventService {
       throw new AppError('Church not exists');
     }
 
-    if (church.id !== church_id) {
-      throw new AppError(
-        'User dont have permissions to edit an event for this church.',
-      );
-    }
-
     const updatedEvent = await this.eventsRepository.save({
       ...event,
       ...{
@@ -60,4 +54,4 @@ class EditEventService {
   }
 }
 
-export default EditEventService;
+export default UpdateEventService;

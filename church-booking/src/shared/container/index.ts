@@ -1,5 +1,7 @@
 import { container } from 'tsyringe';
 
+import '@modules/churchs/providers';
+
 import IChurchsRepository from '@modules/churchs/repositories/IChurchsRepository';
 import ChurchsRepository from '@modules/churchs/infra/typeorm/repositories/ChurchsRepository';
 

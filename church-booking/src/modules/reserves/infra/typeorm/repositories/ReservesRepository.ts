@@ -34,10 +34,10 @@ class ReservesRepository implements IReservesRepository {
   }
 
   public async create({
-    reserve_group_id,
+    reserve_group,
     name,
   }: ICreateReserveDTO): Promise<Reserve> {
-    const reserve = await this.ormRepository.create({ reserve_group_id, name });
+    const reserve = await this.ormRepository.create({ reserve_group, name });
     await this.ormRepository.save(reserve);
 
     return reserve;

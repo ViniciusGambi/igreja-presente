@@ -47,7 +47,8 @@ class CreateReserveService {
     const createdReserves = await Promise.all(
       names.map(async name => {
         const createdReserve = await this.reservesRepository.create({
-          reserve_group_id: reserveGroup.id,
+          // reserve_group_id: reserveGroup.id,
+          reserve_group: reserveGroup,
           name,
         });
 

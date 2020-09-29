@@ -4,7 +4,7 @@ import GetEventService from '@modules/events/services/GetEventService';
 import ListEventsByChurchService from '@modules/events/services/ListEventsByChurchService';
 import DeleteEventService from '@modules/events/services/DeleteEventService';
 import CreateEventService from '@modules/events/services/CreateEventService';
-import EditEventService from '@modules/events/services/EditEventService';
+import UpdateEventService from '@modules/events/services/UpdateEventService';
 
 class EventsController {
   public async get(request: Request, response: Response): Promise<Response> {
@@ -38,7 +38,7 @@ class EventsController {
     const event = await createEventService.execute({
       name,
       date,
-      church_id,
+      logged_church_id: church_id,
       max_reservations,
     });
     return response.json(event);
@@ -49,8 +49,8 @@ class EventsController {
     const { name, date, max_reservations } = request.body;
     const church_id = request.user.id;
 
-    const editEventService = container.resolve(EditEventService);
-    const event = await editEventService.execute({
+    const updateEventService = container.resolve(UpdateEventService);
+    const event = await updateEventService.execute({
       id,
       name,
       date,
