@@ -39,7 +39,10 @@ const AuthProvider: React.FC = ({ children }) => {
   });
 
   const signIn = useCallback(async ({ user: username, password }) => {
-    const response = await api.post('sessions', { user: username, password });
+    const response = await api.post('sessions', {
+      idOrEmail: username,
+      password,
+    });
     const { token, church } = response.data;
 
     localStorage.setItem('@ChurchReserves:token', token);
