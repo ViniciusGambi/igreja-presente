@@ -34,6 +34,7 @@ class FakeReservesRepository implements IReservesRepository {
       reserve_group,
       reserve_group_id: reserve_group.id,
       name,
+      presence: false,
     });
 
     this.reserves.push(reserve);
