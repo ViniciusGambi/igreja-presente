@@ -6,8 +6,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
-  padding: 0 5vw;
+  height: calc(100vh-50px);
+  padding: 0 5vw 50px;
 `;
 
 export const Content = styled.div`

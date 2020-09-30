@@ -9,6 +9,7 @@ export const Input = styled.input<InputProps>`
   padding: 4px 4px 4px 12px;
   border-radius: 4px;
   border: 1px solid #fff;
+  width: 70%;
 
   ${props =>
     props.isFocused &&
@@ -20,6 +21,10 @@ export const Input = styled.input<InputProps>`
 
 export const Container = styled.div`
   min-width: 50vw;
+
+  @media (max-width: 850px) {
+    min-height: 70vh;
+  }
 `;
 
 export const Content = styled.div`
@@ -33,6 +38,7 @@ export const Content = styled.div`
     padding: 4px 4px 4px 12px;
     border-radius: 4px;
     margin-bottom: 10px;
+    max-width: 100%;
   }
 
   h1 {
@@ -72,18 +78,23 @@ export const Content = styled.div`
     button {
       margin-right: 5vw;
     }
+    margin-bottom: 20px;
   }
+`;
 
-  table {
-    margin: 8px auto 32px 16px;
-    list-style: none;
-  }
+export const ListLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0 32px 0;
 
-  td:first-child {
-    padding: 0 25px;
-  }
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
 
-  td button:nth-child(2) {
-    margin-left: 4px;
+    > div {
+      margin-left: 2%;
+    }
   }
 `;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiTrash, FiEdit, FiPlus } from 'react-icons/fi';
-import { Container, Content, Input } from './styles';
+import { Container, Content, Input, ListLine } from './styles';
 import api from '../../services/api';
 import {
   getformatedDate,
@@ -37,7 +37,7 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
       const reserve = await api.post('/reserves', {
         event_id: event.id,
         names: reservesNames,
-        whatsapp: whatsapp
+        whatsapp,
       });
 
       if (reserves.length <= 0) {
@@ -116,12 +116,14 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
           )} às ${getFormatedHour(event.date)}`}
         </h1>
         <hr />
-          <input
-            type="text"
-            placeholder="Whatsapp"
-            value={whatsapp}
-            onChange={(ev) => {setWhatsapp(ev.currentTarget.value)}}
-          />
+        <input
+          type="text"
+          placeholder="Whatsapp"
+          value={whatsapp}
+          onChange={ev => {
+            setWhatsapp(ev.currentTarget.value);
+          }}
+        />
         <div>
           <h2>Reservas</h2>
           <button type="button" onClick={handleNewReserve}>
@@ -129,53 +131,52 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
           </button>
         </div>
 
-        <table>
-          <tbody>
-            {reserves.length > 0 ? (
-              reserves.map((reserve, index) => {
-                return (
-                  <tr key={`name+${index}`}>
-                    <td>
-                      <Input
-                        type="text"
-                        value={reserve.name}
-                        onChange={(ev: React.ChangeEvent<HTMLInputElement>) => {
-                          handleChangeInput(index, ev);
-                        }}
-                        onBlur={() => {
-                          handleBlur(index);
-                        }}
-                        isFocused={reserve.isFocused}
-                        readOnly={!reserve.isFocused}
-                      />
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleRemoveReserve(index);
-                        }}
-                      >
-                        <FiTrash />
-                      </button>
+        <ListLine>
+          {reserves.length > 0 ? (
+            reserves.map((reserve, index) => {
+              return (
+                <div key={`name+${index}`}>
+                  <Input
+                    type="text"
+                    value={reserve.name}
+                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => {
+                      handleChangeInput(index, ev);
+                    }}
+                    onBlur={() => {
+                      handleBlur(index);
+                    }}
+                    isFocused={reserve.isFocused}
+                    readOnly={!reserve.isFocused}
+                  />
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleEditReserve(index);
-                        }}
-                      >
-                        <FiEdit />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr><td>Clique no botão de + acima para adicionar as reservas</td></tr>
-            )}
-          </tbody>
-        </table>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleRemoveReserve(index);
+                      }}
+                    >
+                      <FiTrash />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleEditReserve(index);
+                      }}
+                    >
+                      <FiEdit />
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div>
+              <div>Clique no botão de + acima para adicionar as reservas</div>
+            </div>
+          )}
+        </ListLine>
         <div>
           <button type="button" onClick={postReserve}>
             Fazer reserva!

@@ -48,4 +48,8 @@ export const Content = styled.div`
     width: 100%;
     padding: 20px 0;
   }
+
+  .line-between {
+    justify-content: space-between;
+  }
 `;

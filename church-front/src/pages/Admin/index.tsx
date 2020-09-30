@@ -6,6 +6,12 @@ import { Container, Content } from './styles';
 import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
+import { alphabeticSort } from '../../utils/jsonSort';
+import {
+  getformatedDate,
+  getFormatedHour,
+  getWeekDay,
+} from '../../utils/dateUtils';
 
 interface LoginFormData {
   email: string;
@@ -29,7 +35,8 @@ const SignIn: React.FC = () => {
 
   useEffect(() => {
     api.get(`events/churchs/${church.id}`).then(response => {
-      setEvents(response.data);
+      const sortedEvents = alphabeticSort(response.data, 'date');
+      setEvents(sortedEvents);
       setIsLoading(false);
     });
   }, [church.id]);
@@ -43,7 +50,7 @@ const SignIn: React.FC = () => {
             <h1>Eventos</h1>
             <hr />
             <div className="buttonLine">
-              <Link to="admin/events/create">
+              <Link to="/admin/events/create">
                 <Button>Criar evento</Button>
               </Link>
             </div>
@@ -53,7 +60,9 @@ const SignIn: React.FC = () => {
                 className="eventCard"
                 onClick={() => history.push(`/admin/events/${event.id}/list`)}
               >
-                {event.name}
+                {`${getWeekDay(event.date)}, ${getformatedDate(
+                  event.date,
+                )} às ${getFormatedHour(event.date)}`}
               </div>
             ))}
           </Content>

@@ -15,6 +15,7 @@ export const Container = styled.div`
 `;
 
 export const ListItem = styled.div<ListItemProps>`
+  padding: 0 5%;
   font-size: 20px;
   display: flex;
   justify-content: space-between;
@@ -51,12 +52,18 @@ export const Content = styled.div`
   }
 
   h1 {
+    margin-top: 32px;
     margin-left: 32px;
     font-size: 32px;
   }
 
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 24px;
+    }
+  }
+
   h4 {
-    margin-top: 32px;
     margin-left: 32px;
     font-size: 16px;
   }

@@ -1,8 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 import { secondColor } from '../../assets/colors';
 
-export const Container = styled.div`
+interface ContainerProps {
+  color?: string;
+}
+
+export const Container = styled.div<ContainerProps>`
   button {
     width: 100%;
     background: ${secondColor};
@@ -13,8 +17,20 @@ export const Container = styled.div`
     font-weight: 500;
     transition: background-color 0.2s;
 
+    ${props =>
+      props.color &&
+      css`
+        background: ${props.color};
+      `}
+
     &:hover {
       background: ${shade(0.1, secondColor)};
+
+      ${props =>
+        props.color &&
+        css`
+          background: ${shade(0.1, props.color)};
+        `}
     }
   }
 `;

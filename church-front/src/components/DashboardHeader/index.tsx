@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from './styles';
-import logo from '../../assets/logo.png';
+// import logo from '../../assets/logo.png';
 
 interface HeaderProps {
   churchName: string;

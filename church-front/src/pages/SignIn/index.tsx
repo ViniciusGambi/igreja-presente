@@ -20,7 +20,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
-  const { church: user, signIn, signOut } = useAuth();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(

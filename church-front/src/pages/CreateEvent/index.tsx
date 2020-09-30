@@ -12,7 +12,6 @@ import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
-import { getformatedDate } from '../../utils/dateUtils';
 
 interface CreateEventFormData {
   name: string;
@@ -183,7 +182,13 @@ const CreateEvent: React.FC = () => {
             <Input name="date" placeholder="Data" type="date" />
             <Input name="time" placeholder="Hora" type="time" />
 
-            <div className="buttonLine">
+            <div className={`buttonLine${eventId ? ' line-between' : ''}`}>
+              {eventId && (
+                <Button type="button" color="#555">
+                  Deletar evento
+                </Button>
+              )}
+
               <Button type="submit">
                 {eventId ? 'Salvar Evento' : 'Criar evento'}
               </Button>

@@ -25,7 +25,6 @@ interface EventProps {
 }
 
 const PresenceList: React.FC = () => {
-  const { church } = useAuth();
   const { eventId } = useParams();
   const { token } = useAuth();
   const history = useHistory();
@@ -84,6 +83,8 @@ const PresenceList: React.FC = () => {
       <Container>
         {!isLoading && (
           <Content>
+            <h1>Lista de presença</h1>
+
             <div className="row-div">
               <h4>
                 {`${event.name} - ${getWeekDay(event.date)} ${getformatedDate(
@@ -96,8 +97,6 @@ const PresenceList: React.FC = () => {
                 Editar
               </Button>
             </div>
-
-            <h1>Lista de presença</h1>
 
             <hr />
             {reserves.map(reserve => (

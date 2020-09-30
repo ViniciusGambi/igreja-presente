@@ -29,6 +29,12 @@ export const Container = styled.header`
     max-width: 900px;
   }
 
+  @media (max-width: 950px) {
+    div {
+      justify-content: space-around;
+    }
+  }
+
   img {
     height: 7vh;
     margin: 1.5vh 0;
