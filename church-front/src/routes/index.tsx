@@ -10,6 +10,7 @@ import PresenceList from '../pages/PresenceList';
 
 const Routes: React.FC = () => (
   <Switch>
+    <Route path="/" component={SignIn} exact isLogin />
     <Route path="/login" component={SignIn} exact isLogin />
     <Route path="/cadastro" component={SignUp} exact isLogin />
     <Route path="/admin" component={Admin} exact isPrivate />
