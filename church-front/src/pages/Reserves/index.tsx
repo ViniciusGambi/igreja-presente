@@ -34,12 +34,6 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
     const reservesNames = reserves.map(reserve => reserve.name);
 
     try {
-      const reserve = await api.post('/reserves', {
-        event_id: event.id,
-        names: reservesNames,
-        whatsapp,
-      });
-
       if (reserves.length <= 0) {
         alert('Insira uma reserva clicando no + .');
         return;
@@ -52,11 +46,18 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
         return;
       }
 
+      const reserve = await api.post('/reserves', {
+        event_id: event.id,
+        names: reservesNames,
+        whatsapp,
+      });
+
       if (reserve.status === 200) {
-        alert(`Reserva feita com ID: ${reserve.data.reserveGroup.id}`);
+        alert(`Reserva feita com ID: ${reserve.data[0].reserve_group_id}`);
         closeModal();
       }
     } catch (err) {
+      console.log(err);
       if (
         err.response.data.message ===
         'You are trying to create more reserves than has available.'
