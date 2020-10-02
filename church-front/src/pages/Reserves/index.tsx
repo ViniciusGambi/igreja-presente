@@ -57,7 +57,6 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
         closeModal();
       }
     } catch (err) {
-      console.log(err);
       if (
         err.response.data.message ===
         'You are trying to create more reserves than has available.'
@@ -119,14 +118,14 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
         <hr />
         <input
           type="text"
-          placeholder="Whatsapp"
+          placeholder="Insira aqui o seu Whatsapp"
           value={whatsapp}
           onChange={ev => {
             setWhatsapp(ev.currentTarget.value);
           }}
         />
         <div>
-          <h2>Reservas</h2>
+          <h2>Para quem você fará a reserva?</h2>
           <button type="button" onClick={handleNewReserve}>
             <FiPlus />
           </button>
@@ -139,6 +138,7 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
                 <div key={`name+${index}`}>
                   <Input
                     type="text"
+                    placeholder="Insira aqui o nome"
                     value={reserve.name}
                     onChange={(ev: React.ChangeEvent<HTMLInputElement>) => {
                       handleChangeInput(index, ev);
@@ -178,7 +178,7 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
             </div>
           )}
         </ListLine>
-        <div>
+        <div className="button-box">
           <button type="button" onClick={postReserve}>
             Fazer reserva!
           </button>

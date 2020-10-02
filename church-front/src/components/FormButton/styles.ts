@@ -16,6 +16,7 @@ export const Container = styled.div<ContainerProps>`
     color: #fff;
     font-weight: 500;
     transition: background-color 0.2s;
+    font-size: 16px;
 
     ${props =>
       props.color &&

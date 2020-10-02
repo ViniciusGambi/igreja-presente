@@ -53,7 +53,11 @@ export const Container = styled.div<InputProps>`
     background: transparent;
     border: 0;
     color: #000;
-
+    font-size: 16px;
+    display:block;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    min-height: 1.2em;
     &::placeholder {
       color: ${mainBorderColor};
     }

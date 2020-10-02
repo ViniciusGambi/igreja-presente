@@ -29,7 +29,7 @@ const customStyles = {
     bottom: 'auto',
     transform: 'translate(-50%, -50%)',
     padding: '30px',
-    maxWidth: '80vw',
+    maxWidth: '90vw',
     minHeight: '50vh',
     maxHeight: '80vh',
     display: 'flex',

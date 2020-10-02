@@ -10,6 +10,7 @@ export const Input = styled.input<InputProps>`
   border-radius: 4px;
   border: 1px solid #fff;
   width: 70%;
+  font-size: 16px;
 
   ${props =>
     props.isFocused &&
@@ -20,9 +21,10 @@ export const Input = styled.input<InputProps>`
 `;
 
 export const Container = styled.div`
+  display: flex;
   min-width: 50vw;
 
-  @media (max-width: 850px) {
+  @media (max-width: 600px) {
     min-height: 70vh;
   }
 `;
@@ -32,6 +34,7 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  flex-grow: 1;
 
   > input {
     border: 2px solid ${mainColor};
@@ -39,6 +42,7 @@ export const Content = styled.div`
     border-radius: 4px;
     margin-bottom: 10px;
     max-width: 100%;
+    font-size: 16px;
   }
 
   h1 {
@@ -73,11 +77,14 @@ export const Content = styled.div`
   > div:nth-child(6) {
     display: flex;
     width: 100%;
+    align-items: flex-end;
     justify-content: flex-end;
+    flex-grow: 1;
 
     button {
       margin-right: 5vw;
     }
+
     margin-bottom: 20px;
   }
 `;
