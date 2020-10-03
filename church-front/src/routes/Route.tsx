@@ -30,7 +30,7 @@ const Route: React.FC<RouteProps> = ({
           return <Redirect to="/login" />;
         }
         if (isLogin) {
-          return <Redirect to="/" />;
+          return <Redirect to="/admin" />;
         }
         return <Component />;
       }}
