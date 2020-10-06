@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://church-api.cadeo113.online',
+  baseURL: 'http://localhost:3333',
 });
 
 export default api;

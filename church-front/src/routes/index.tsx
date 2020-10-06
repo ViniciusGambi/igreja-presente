@@ -7,12 +7,14 @@ import SignUp from '../pages/SignUp';
 import Admin from '../pages/Admin';
 import CreateEvent from '../pages/CreateEvent';
 import PresenceList from '../pages/PresenceList';
+import ResetPassword from '../pages/ResetPassword';
 
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" component={SignIn} exact isLogin />
     <Route path="/login" component={SignIn} exact isLogin />
     <Route path="/cadastro" component={SignUp} exact isLogin />
+    <Route path="/reset_password" component={ResetPassword} exact />
     <Route path="/admin" component={Admin} exact isPrivate />
     <Route
       path="/admin/events/:eventId/list"
