@@ -27,6 +27,8 @@ class EventsController {
     );
     const events = await listEventsByChurchService.execute(church_id);
 
+    console.log(events);
+
     const leanEvents = events.map(event => {
       return {
         id: event.id,
