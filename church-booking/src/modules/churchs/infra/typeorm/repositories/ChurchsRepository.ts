@@ -44,6 +44,10 @@ class ChurchsRepository implements IChurchsRepository {
     await this.ormRepository.save(church);
     return church;
   }
+
+  public async delete(church: Church): Promise<void> {
+    await this.ormRepository.remove(church);
+  }
 }
 
 export default ChurchsRepository;

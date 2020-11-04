@@ -8,6 +8,7 @@ import Admin from '../pages/Admin';
 import CreateEvent from '../pages/CreateEvent';
 import PresenceList from '../pages/PresenceList';
 import ResetPassword from '../pages/ResetPassword';
+import AccountVerification from '../pages/AccountVerification';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -15,6 +16,7 @@ const Routes: React.FC = () => (
     <Route path="/login" component={SignIn} exact isLogin />
     <Route path="/cadastro" component={SignUp} exact isLogin />
     <Route path="/reset_password" component={ResetPassword} exact />
+    <Route path="/verify_account" component={AccountVerification} exact />
     <Route path="/admin" component={Admin} exact isPrivate />
     <Route
       path="/admin/events/:eventId/list"

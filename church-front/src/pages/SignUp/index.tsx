@@ -112,7 +112,7 @@ const SignUp: React.FC = () => {
 
         <Link to="/">
           <FiLogIn />
-          Criar cadastro
+          Ir para o Login
         </Link>
       </Content>
     </Container>

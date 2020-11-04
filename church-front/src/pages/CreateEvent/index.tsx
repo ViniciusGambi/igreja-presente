@@ -64,32 +64,45 @@ const CreateEvent: React.FC = () => {
     }
   }, [eventId]);
 
-  const createEvent = async (data: Omit<CreateEventFormData, 'time'>) => {
-    const event = await api.post('/events', data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return event;
-  };
-
-  const editEvent = async ({
-    id,
-    name,
-    max_reservations,
-    date,
-  }: EditEventFormData) => {
-    const event = await api.patch(
-      `events/${id}`,
-      { id, name, max_reservations, date },
-      {
+  const createEvent = useCallback(
+    async (data: Omit<CreateEventFormData, 'time'>) => {
+      const event = await api.post('/events', data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
-    );
-    return event;
-  };
+      });
+      return event;
+    },
+    [token],
+  );
+
+  const editEvent = useCallback(
+    async ({ id, name, max_reservations, date }: EditEventFormData) => {
+      const event = await api.patch(
+        `events/${id}`,
+        { id, name, max_reservations, date },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return event;
+    },
+    [token],
+  );
+
+  const deleteEvent = useCallback(
+    async (id: string) => {
+      const event = await api.delete(`events/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return event;
+    },
+    [token],
+  );
 
   const parseDatetime = (date: Date, time: string): Date => {
     const fullDate = new Date(`${date} ${time}`);
@@ -160,7 +173,7 @@ const CreateEvent: React.FC = () => {
         }
       }
     },
-    [addToast, history, createEvent],
+    [addToast, history, createEvent, eventId, editEvent],
   );
 
   return (
@@ -184,7 +197,13 @@ const CreateEvent: React.FC = () => {
 
             <div className={`buttonLine${eventId ? ' line-between' : ''}`}>
               {eventId && (
-                <Button type="button" color="#555">
+                <Button
+                  type="button"
+                  color="#555"
+                  onClick={() => {
+                    deleteEvent(eventId);
+                  }}
+                >
                   Deletar evento
                 </Button>
               )}

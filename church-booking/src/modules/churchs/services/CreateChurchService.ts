@@ -1,8 +1,11 @@
 import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
+import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import path from 'path';
 import Church from '../infra/typeorm/entities/Church';
 import IChurchsRepository from '../repositories/IChurchsRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import IChurchTokensRepository from '../repositories/IChurchTokensRepository';
 
 interface IRequest {
   id: string;
@@ -19,6 +22,10 @@ class CreateChurchService {
     private churchsRepository: IChurchsRepository,
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+    @inject('ChurchTokensRepository')
+    private churchTokensRepository: IChurchTokensRepository,
+    @inject('MailProvider')
+    private mailProvider: IMailProvider,
   ) {}
 
   public async execute({
@@ -43,6 +50,30 @@ class CreateChurchService {
       email,
       password: hashedPassword,
     });
+
+    const { token } = await this.churchTokensRepository.generate(church.id);
+
+    /* const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'verify_account.hbs',
+    );
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: church.name,
+        email: church.email,
+      },
+      subject: '[Church] Verificação de Conta',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: church.name,
+          link: `http://localhost:3000/verify_account?token=${token}`,
+        },
+      },
+    }); */
 
     return church;
   }

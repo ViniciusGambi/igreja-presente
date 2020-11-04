@@ -1,6 +1,8 @@
+import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import AppError from '@shared/errors/AppError';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeChurchsRepository from '../repositories/fakes/FakeChurchsRepository';
+import FakeChurchTokensRepository from '../repositories/fakes/FakeChurchTokensRepository';
 import AuthenticateChurchService from './AuthenticateChurchService';
 import CreateChurchService from './CreateChurchService';
 
@@ -8,11 +10,15 @@ let fakeChurchsRepository: FakeChurchsRepository;
 let fakeHashProvider: FakeHashProvider;
 let authenticateChurchService: AuthenticateChurchService;
 let createChurchService: CreateChurchService;
+let fakeMailProvider: FakeMailProvider;
+let fakeChurchTokensRepository: FakeChurchTokensRepository;
 
 describe('AuthenticateChurchService', () => {
   beforeEach(() => {
     fakeChurchsRepository = new FakeChurchsRepository();
     fakeHashProvider = new FakeHashProvider();
+    fakeChurchTokensRepository = new FakeChurchTokensRepository();
+    fakeMailProvider = new FakeMailProvider();
     authenticateChurchService = new AuthenticateChurchService(
       fakeChurchsRepository,
       fakeHashProvider,
@@ -20,6 +26,8 @@ describe('AuthenticateChurchService', () => {
     createChurchService = new CreateChurchService(
       fakeChurchsRepository,
       fakeHashProvider,
+      fakeChurchTokensRepository,
+      fakeMailProvider,
     );
   });
 

@@ -28,6 +28,9 @@ class Church {
   @OneToMany(() => Event, event => event.church)
   event: Event;
 
+  @Column()
+  active: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

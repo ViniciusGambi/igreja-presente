@@ -27,7 +27,17 @@ class EventsController {
     );
     const events = await listEventsByChurchService.execute(church_id);
 
-    return response.json(events);
+    const leanEvents = events.map(event => {
+      return {
+        id: event.id,
+        name: event.name,
+        event_reserves: event.event_reserves,
+        max_reservations: event.max_reservations,
+        church_id: event.church_id,
+      };
+    });
+
+    return response.json(leanEvents);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -57,7 +67,13 @@ class EventsController {
       church_id,
       max_reservations,
     });
-    return response.json(event);
+    return response.json({
+      id: event.id,
+      name: event.name,
+      event_reserves: event.event_reserves,
+      max_reservations: event.max_reservations,
+      church_id: event.church_id,
+    });
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

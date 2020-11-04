@@ -51,10 +51,23 @@ export const Content = styled.div`
     width: 100%;
   }
 
+  .line-end {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
   h1 {
     margin-top: 32px;
     margin-left: 32px;
     font-size: 32px;
+
+    @media (max-width: 600px) {
+      margin-top: 16px;
+    }
   }
 
   @media (max-width: 600px) {
@@ -69,7 +82,7 @@ export const Content = styled.div`
   }
 
   hr {
-    margin: 10px 0 20px 0;
+    margin: 10px 0 10px 0;
     width: 100%;
     border: 1px solid ${mainColor};
   }

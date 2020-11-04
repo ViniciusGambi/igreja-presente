@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export default class CreateChurchs1598380463327 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -32,6 +27,11 @@ export default class CreateChurchs1598380463327 implements MigrationInterface {
             name: 'email',
             type: 'varchar',
             isUnique: true,
+          },
+          {
+            name: 'active',
+            type: 'boolean',
+            default: 'false',
           },
           {
             name: 'created_at',

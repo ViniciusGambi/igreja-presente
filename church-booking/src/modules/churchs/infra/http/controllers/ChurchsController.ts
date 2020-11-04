@@ -15,6 +15,9 @@ class ChurchsController {
       email,
       password,
     });
+
+    delete church.password;
+
     return response.json(church);
   }
 
@@ -22,7 +25,12 @@ class ChurchsController {
     const { id } = request.params;
     const getChurchService = container.resolve(GetChurchService);
     const church = await getChurchService.execute(id);
-    return response.json(church);
+
+    return response.json({
+      id: church.id,
+      name: church.name,
+      url: church.url,
+    });
   }
 }
 

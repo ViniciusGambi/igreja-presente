@@ -1,6 +1,7 @@
 import { container } from 'tsyringe';
 
 import '@modules/churchs/providers';
+import './providers';
 
 import IChurchsRepository from '@modules/churchs/repositories/IChurchsRepository';
 import ChurchsRepository from '@modules/churchs/infra/typeorm/repositories/ChurchsRepository';
@@ -13,10 +14,17 @@ import ReservesRepository from '@modules/reserves/infra/typeorm/repositories/Res
 
 import IReserveGroupsRepository from '@modules/reserves/repositories/IReserveGroupsRepository';
 import ReserveGroupsRepository from '@modules/reserves/infra/typeorm/repositories/ReserveGroupsRepository';
+import ChurchTokensRepository from '@modules/churchs/infra/typeorm/repositories/ChurchTokensRepository';
+import IChurchTokensRepository from '@modules/churchs/repositories/IChurchTokensRepository';
 
 container.registerSingleton<IChurchsRepository>(
   'ChurchsRepository',
   ChurchsRepository,
+);
+
+container.registerSingleton<IChurchTokensRepository>(
+  'ChurchTokensRepository',
+  ChurchTokensRepository,
 );
 
 container.registerSingleton<IEventsRepository>(

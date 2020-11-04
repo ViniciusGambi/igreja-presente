@@ -7,6 +7,8 @@ import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 import { alphabeticSort } from '../../utils/jsonSort';
+import { useToast } from '../../hooks/toast';
+
 import {
   getformatedDate,
   getFormatedHour,
@@ -33,13 +35,25 @@ const SignIn: React.FC = () => {
   const [events, setEvents] = useState<EventProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const { addToast } = useToast();
+
   useEffect(() => {
-    api.get(`events/churchs/${church.id}`).then(response => {
-      const sortedEvents = alphabeticSort(response.data, 'date');
-      setEvents(sortedEvents);
-      setIsLoading(false);
-    });
-  }, [church.id]);
+    async function loadData(): Promise<void> {
+      try {
+        const response = await api.get(`events/churchs/${church.id}`);
+        const sortedEvents = alphabeticSort(response.data, 'date');
+        setEvents(sortedEvents);
+        setIsLoading(false);
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Aconteceu um erro',
+          description: 'Tente novamente mais tarde',
+        });
+      }
+    }
+    loadData();
+  }, [church.id, addToast]);
 
   return (
     <>

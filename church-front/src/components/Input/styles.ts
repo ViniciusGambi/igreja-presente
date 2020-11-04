@@ -22,8 +22,9 @@ export const Container = styled.div<InputProps>`
   align-items: center;
   transition: 0.2s;
 
+
   svg {
-    margin-right: 16px;
+    margin-right: 10px;
   }
 
   ${props =>
@@ -49,18 +50,25 @@ export const Container = styled.div<InputProps>`
   }
 
   input {
-    flex: 1;
+    width:90%;
     background: transparent;
     border: 0;
     color: #000;
-    font-size: 16px;
     display:block;
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     min-height: 1.2em;
+    font-size: 16px;
     &::placeholder {
       color: ${mainBorderColor};
     }
+  }
+
+  input:required {
+    box-shadow:none;
+  }
+  input:invalid {
+      box-shadow:none;
   }
 `;
 

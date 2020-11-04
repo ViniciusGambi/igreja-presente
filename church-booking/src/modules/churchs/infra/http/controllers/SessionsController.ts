@@ -15,7 +15,14 @@ class SessionsController {
       password,
     });
 
-    return response.json({ church, token });
+    return response.json({
+      church: {
+        id: church.id,
+        name: church.name,
+        url: church.url,
+      },
+      token,
+    });
   }
 }
 

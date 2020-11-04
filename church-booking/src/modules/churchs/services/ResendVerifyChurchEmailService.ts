@@ -3,14 +3,16 @@ import IChurchsRepository from '@modules/churchs/repositories/IChurchsRepository
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import AppError from '@shared/errors/AppError';
 import path from 'path';
+import { addHours, isBefore } from 'date-fns';
 import IChurchTokensRepository from '../repositories/IChurchTokensRepository';
+import Church from '../infra/typeorm/entities/Church';
 
 interface IRequest {
-  email: string;
+  church: Church;
 }
 
 @injectable()
-class SendForgotPasswordEmailService {
+class ResendVerifyChurchEmailService {
   constructor(
     @inject('ChurchsRepository')
     private churchsRepository: IChurchsRepository,
@@ -20,27 +22,32 @@ class SendForgotPasswordEmailService {
     private mailProvider: IMailProvider,
   ) {}
 
-  public async execute({ email }: IRequest): Promise<string> {
-    const church = await this.churchsRepository.findByEmail(email);
+  public async execute(loggedChurch: Church): Promise<void> {
+    const church = await this.churchsRepository.findById(loggedChurch.id);
 
     if (!church) {
       throw new AppError('Church does not exists');
     }
 
-    const existentTokens = await this.churchTokensRepository.findByChurch(
+    const churchTokens = await this.churchTokensRepository.findByChurch(
       church.id,
     );
 
+    const validChurchTokens = churchTokens.filter(token => {
+      const compareDate = addHours(token.created_at, 2);
+      return isBefore(Date.now(), compareDate);
+    });
+
     const { token } =
-      existentTokens?.length <= 0
-        ? await this.churchTokensRepository.generate(church.id)
-        : existentTokens[0];
+      validChurchTokens.length > 0
+        ? validChurchTokens[0]
+        : await this.churchTokensRepository.generate(church.id);
 
     const forgotPasswordTemplate = path.resolve(
       __dirname,
       '..',
       'views',
-      'forgot_password.hbs',
+      'verify_account.hbs',
     );
 
     await this.mailProvider.sendMail({
@@ -48,18 +55,16 @@ class SendForgotPasswordEmailService {
         name: church.name,
         email: church.email,
       },
-      subject: '[Church] Recuperação de senha',
+      subject: '[Church] Verificação de Conta',
       templateData: {
         file: forgotPasswordTemplate,
         variables: {
           name: church.name,
-          link: `http://localhost:3000/reset_password?token=${token}`,
+          link: `http://localhost:3000/verify_account?token=${token}`,
         },
       },
     });
-
-    return token;
   }
 }
 
-export default SendForgotPasswordEmailService;
+export default ResendVerifyChurchEmailService;

@@ -7,6 +7,7 @@ import Card from '../../components/Card';
 import { Container, Title } from './styles';
 import Reserves from '../Reserves';
 import api from '../../services/api';
+import { useToast } from '../../hooks/toast';
 
 interface EventProps {
   id: string;
@@ -52,6 +53,8 @@ const Dashboard: React.FC = () => {
     {} as EventProps,
   );
 
+  const { addToast } = useToast();
+
   useEffect(() => {
     async function loadData(): Promise<void> {
       try {
@@ -61,10 +64,16 @@ const Dashboard: React.FC = () => {
         ]);
         setEvents(loadedEvents.data);
         setChurch(loadedChurch.data);
-      } catch {}
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Aconteceu um erro',
+          description: 'Tente novamente mais tarde',
+        });
+      }
     }
     loadData();
-  }, [modalIsOpen, churchId]);
+  }, [modalIsOpen, churchId, addToast]);
 
   function openModal(event: EventProps) {
     setReservingEvent(event);

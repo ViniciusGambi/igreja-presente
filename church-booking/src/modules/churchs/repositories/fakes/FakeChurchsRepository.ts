@@ -25,7 +25,7 @@ class FakeChurchsRepository implements IChurchsRepository {
   public async create(church: ICreateChurchDTO): Promise<Church> {
     const createdChurch = new Church();
 
-    Object.assign(createdChurch, church);
+    Object.assign(createdChurch, { active: false }, church);
 
     this.churchs.push(createdChurch);
 
@@ -37,6 +37,11 @@ class FakeChurchsRepository implements IChurchsRepository {
     this.churchs[findedIndex] = church;
 
     return church;
+  }
+
+  public async delete(church: Church): Promise<void> {
+    const findedIndex = this.churchs.findIndex(chc => chc.id === church.id);
+    this.churchs.splice(findedIndex, 1);
   }
 }
 

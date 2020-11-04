@@ -35,6 +35,8 @@ class Event {
   @Column()
   max_reservations: number;
 
+  event_reserves: number;
+
   @CreateDateColumn()
   created_at: Date;
 
