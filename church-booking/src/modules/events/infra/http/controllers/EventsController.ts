@@ -30,13 +30,8 @@ class EventsController {
     console.log(events);
 
     const leanEvents = events.map(event => {
-      return {
-        id: event.id,
-        name: event.name,
-        max_reservations: event.max_reservations,
-        church_id: event.church_id,
-        date: event.date
-      };
+      delete event.church;
+      return event;
     });
 
     return response.json(events);
