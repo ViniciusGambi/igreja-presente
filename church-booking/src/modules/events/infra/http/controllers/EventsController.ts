@@ -40,7 +40,7 @@ class EventsController {
       };
     });
 
-    return response.json(leanEvents);
+    return response.json(events);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
