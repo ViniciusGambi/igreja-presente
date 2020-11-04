@@ -35,18 +35,22 @@ export const Content = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   flex-grow: 1;
+  max-width: 70vw;
 
-  > input {
-    border: 2px solid ${mainColor};
-    padding: 4px 4px 4px 12px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    max-width: 100%;
-    font-size: 16px;
+  .react-tel-input {
+    margin-bottom: 16px;
+    input {
+      border-radius: 4px;
+      font-size: 16px;
+    }
   }
 
   h1 {
     color: #000;
+  }
+
+  h2:first-of-type{
+    margin-bottom: 4px;
   }
 
   h2 {
@@ -68,13 +72,13 @@ export const Content = styled.div`
     padding: 8px;
   }
 
-  > div:nth-child(4) {
+  > div:nth-child(5) {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  > div:nth-child(6) {
+  > div:nth-child(7) {
     display: flex;
     width: 100%;
     align-items: flex-end;

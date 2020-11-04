@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { FiTrash, FiEdit, FiPlus } from 'react-icons/fi';
 import { Container, Content, Input, ListLine } from './styles';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 import api from '../../services/api';
+
+
 import {
   getformatedDate,
   getFormatedHour,
@@ -46,6 +50,11 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
         return;
       }
 
+      if (whatsapp.length !== 13) {
+        alert('Insira um whatsapp válido.');
+        return;
+      }
+
       const reserve = await api.post('/reserves', {
         event_id: event.id,
         names: reservesNames,
@@ -53,7 +62,8 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
       });
 
       if (reserve.status === 200) {
-        alert(`Reserva feita com ID: ${reserve.data[0].reserve_group_id}`);
+        //alert(`Reserva feita com ID: ${reserve.data[0].reserve_group_id}`);
+        alert('Sua reserva foi feita! Você receberá um comprovante por whatsapp em alguns minutos.')
         closeModal();
       }
     } catch (err) {
@@ -116,14 +126,25 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
           )} às ${getFormatedHour(event.date)}`}
         </h1>
         <hr />
-        <input
+        {/*<input
           type="text"
           placeholder="Insira aqui o seu Whatsapp"
           value={whatsapp}
           onChange={ev => {
             setWhatsapp(ev.currentTarget.value);
           }}
+        />*/}
+
+        <h2>Insira abaixo o seu whatsapp abaixo</h2>
+        <PhoneInput
+          country={'br'}
+          value={whatsapp}
+          onChange={(ev: string) => {
+            setWhatsapp(ev);
+          }
+        }
         />
+
         <div>
           <h2>Para quem você fará a reserva?</h2>
           <button type="button" onClick={handleNewReserve}>

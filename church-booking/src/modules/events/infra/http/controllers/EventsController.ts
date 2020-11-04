@@ -34,6 +34,7 @@ class EventsController {
         event_reserves: event.event_reserves,
         max_reservations: event.max_reservations,
         church_id: event.church_id,
+        date: event.date
       };
     });
 
@@ -73,6 +74,7 @@ class EventsController {
       event_reserves: event.event_reserves,
       max_reservations: event.max_reservations,
       church_id: event.church_id,
+      date: event.date
     });
   }
 
