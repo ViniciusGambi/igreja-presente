@@ -33,7 +33,6 @@ class EventsController {
       return {
         id: event.id,
         name: event.name,
-        event_reserves: event.event_reserves,
         max_reservations: event.max_reservations,
         church_id: event.church_id,
         date: event.date
@@ -54,6 +53,8 @@ class EventsController {
       logged_church_id: church_id,
       max_reservations,
     });
+
+    delete event.church;
     return response.json(event);
   }
 
@@ -70,14 +71,10 @@ class EventsController {
       church_id,
       max_reservations,
     });
-    return response.json({
-      id: event.id,
-      name: event.name,
-      event_reserves: event.event_reserves,
-      max_reservations: event.max_reservations,
-      church_id: event.church_id,
-      date: event.date
-    });
+
+    delete event.church;
+
+    return response.json(event);
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
