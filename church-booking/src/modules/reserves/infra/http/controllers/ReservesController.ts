@@ -3,7 +3,7 @@ import GetReservesByEventIdService from '@modules/reserves/services/GetReservesB
 import { container } from 'tsyringe';
 import UpdateReserveService from '@modules/reserves/services/UpdateReserveService';
 import CreateReserveService from '@modules/reserves/services/CreateReserveService';
-import whatsapi from 'utils/whatsapi';
+import whatsapi from '@shared/container/providers/WhatsApi/whatsapi';
 
 class ReservesController {
   public async listByEvent(
