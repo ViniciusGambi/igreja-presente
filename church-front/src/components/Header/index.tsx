@@ -10,7 +10,7 @@ const Header: React.FC = () => {
     <Container>
       {/* <img src={logo} alt="Sagrados" /> */}
       <div>
-        <h1>igrejareservada.com</h1>
+        <h1>igreja presente</h1>
         <button type="button" onClick={signOut}>
           logout
         </button>

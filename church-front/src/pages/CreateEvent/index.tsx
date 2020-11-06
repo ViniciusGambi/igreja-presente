@@ -94,12 +94,13 @@ const CreateEvent: React.FC = () => {
 
   const deleteEvent = useCallback(
     async (id: string) => {
-      const event = await api.delete(`events/${id}`, {
+      alert('Essa função ainda está sendo desenvolvida. Solicite ao administrador para a remoção.')
+      /*const event = await api.delete(`events/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      return event;
+      return event;*/
     },
     [token],
   );

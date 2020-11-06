@@ -27,7 +27,7 @@ class ReservesController {
       whatsapp
     });
 
-    let content = `Oii! Está tudo okk com a sua reserva para o grupão de domingo! Uhuuul! Caso aconteça algum imprevisto só chamar aqui que desmarcamos e liberamos sua reserva para outra pessoa. Até lá!\n\n *Reservas:*`;
+    let content = `Oii! Está tudo okk com a sua reserva para o grupão de domingo! Uhuuul! Caso aconteça algum imprevisto só chamar aqui que desmarcamos e liberamos sua reserva para outra pessoa. Até lá!\n\n *As reservas que você fez:*`;
 
     for (let i in names){
       content += (`\n- ${names[i]}`);
