@@ -55,15 +55,20 @@ const Reserves: React.FC<ReservesProps> = ({ event, closeModal }) => {
         return;
       }
 
+      const wppRemovedSpaces = whatsapp.split(' ').join('');
+      const wppZone = wppRemovedSpaces.slice(0, 4);
+      const wppPhone = wppRemovedSpaces.substring(5);
+      const adjustedWhatsapp = wppZone + wppPhone ;
+
       const reserve = await api.post('/reserves', {
         event_id: event.id,
         names: reservesNames,
-        whatsapp,
+        whatsapp: adjustedWhatsapp,
       });
 
       if (reserve.status === 200) {
         //alert(`Reserva feita com ID: ${reserve.data[0].reserve_group_id}`);
-        alert('Sua reserva foi feita! Você receberá um comprovante por whatsapp em alguns minutos.')
+        alert('Sua reserva foi realizada com sucesso!')
         closeModal();
       }
     } catch (err) {

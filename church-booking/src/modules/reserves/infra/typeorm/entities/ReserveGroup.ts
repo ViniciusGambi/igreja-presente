@@ -20,6 +20,9 @@ class ReserveGroup {
   @Column()
   event_id: string;
 
+  @Column()
+  whatsapp: string;
+
   @ManyToOne(() => Event, event => event.reserve_group, { eager: true })
   @JoinColumn({ name: 'event_id' })
   event: Event;

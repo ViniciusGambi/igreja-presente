@@ -24,6 +24,11 @@ export default class CreateReserveGroups1598443965883
             type: 'uuid',
           },
           {
+            name: 'whatsapp',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

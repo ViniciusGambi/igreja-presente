@@ -3,6 +3,7 @@ import GetReservesByEventIdService from '@modules/reserves/services/GetReservesB
 import { container } from 'tsyringe';
 import UpdateReserveService from '@modules/reserves/services/UpdateReserveService';
 import CreateReserveService from '@modules/reserves/services/CreateReserveService';
+import whatsapi from 'utils/whatsapi';
 
 class ReservesController {
   public async listByEvent(
@@ -20,23 +21,30 @@ class ReservesController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { event_id, names, whatsapp } = request.body;
     const createReserveService = container.resolve(CreateReserveService);
-    const data = await createReserveService.execute({
+    const reserve = await createReserveService.execute({
       names,
       event_id,
+      whatsapp
     });
 
-    /* try {
-      const message = whatsapi.post('/messages', {
-        text:
-          'Você acaba de fazer a sua inscrição para a celebração no Sábado as 19h na Paróquia Sagrados Corações. Para confirmar a sua presença clique no link: http://ip.com/suareserva.',
-        phone_number: whatsapp,
-        token: 'tokenlegau',
+    let content = `Oii! Está tudo okk com a sua reserva para o grupão de domingo! Uhuuul! Caso aconteça algum imprevisto só chamar aqui que desmarcamos e liberamos sua reserva para outra pessoa. Até lá!\n\n *Reservas:*`;
+
+    for (let i in names){
+      content += (`\n- ${names[i]}`);
+    }
+
+    try {
+      const message = whatsapi.post('/sendText', {
+        "args": {
+            "to": `${whatsapp}@c.us`,
+            "content": content,
+        }
       });
     } catch (err) {
       console.log(err);
-    } */
+    }
 
-    return response.json(data);
+    return response.json(reserve);
   }
 
   public async updateReserve(

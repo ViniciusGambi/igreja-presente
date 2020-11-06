@@ -6,6 +6,7 @@ import IReservesRepository from '../repositories/IReservesRepository';
 import IReserveGroupsRepository from '../repositories/IReserveGroupsRepository';
 
 interface IRequest {
+  whatsapp: string;
   event_id: string;
   names: string[];
 }
@@ -21,7 +22,7 @@ class CreateReserveService {
     private eventsRepository: IEventsRepository,
   ) {}
 
-  public async execute({ event_id, names }: IRequest): Promise<Reserve[]> {
+  public async execute({ whatsapp, event_id, names }: IRequest): Promise<Reserve[]> {
     const event = await this.eventsRepository.findById(event_id);
 
     if (!event) {
@@ -41,6 +42,7 @@ class CreateReserveService {
     }
 
     const reserveGroup = await this.reserveGroupsRepository.create({
+      whatsapp,
       event_id,
     });
 

@@ -15,7 +15,7 @@ export const Input = styled.input<InputProps>`
   ${props =>
     props.isFocused &&
     css`
-      border-color: red;
+      border-color: ${mainColor};
       border-width: 1px;
     `}
 `;
@@ -39,9 +39,11 @@ export const Content = styled.div`
 
   .react-tel-input {
     margin-bottom: 16px;
+
     input {
       border-radius: 4px;
       font-size: 16px;
+      max-width: 70vw;
     }
   }
 

@@ -86,10 +86,10 @@ const Dashboard: React.FC = () => {
 
   return church.name ? (
     <Container>
-      <Header churchName={church.name} color="#DC4E76" />
+      <Header churchName={church.name} color="#E12120" />
       <div>
-        <Title color="#DC4E76">
-          <h1>Próximas celebrações</h1>
+        <Title color="#E12120">
+          <h1>Próximos Eventos</h1>
 
           <div />
         </Title>
@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
             <Card
               key={event.id}
               event={event}
-              color="#DC4E76"
+              color="#E12120"
               onClick={() => {
                 openModal(event);
               }}

@@ -11,9 +11,10 @@ class ReserveGroupRepository implements IReserveGroupsRepository {
   }
 
   public async create({
+    whatsapp,
     event_id,
   }: ICreateReserveGroupDTO): Promise<ReserveGroup> {
-    const reserveGroup = this.ormRepository.create({ event_id });
+    const reserveGroup = this.ormRepository.create({ whatsapp, event_id });
     await this.ormRepository.save(reserveGroup);
 
     return reserveGroup;
