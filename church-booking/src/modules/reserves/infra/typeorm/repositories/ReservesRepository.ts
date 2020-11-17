@@ -33,6 +33,16 @@ class ReservesRepository implements IReservesRepository {
     return reserves;
   }
 
+  public async findByReserveGroupId(reserve_group_id: string): Promise<Reserve[]> {
+    const reserves = await this.ormRepository
+      .createQueryBuilder('reserves')
+      .innerJoinAndSelect('reserves.reserve_group', 'reserve_group')
+      .where('reserve_group.id = :reserve_group_id', { reserve_group_id })
+      .getMany();
+
+    return reserves;
+  }
+
   public async create({
     reserve_group,
     name,

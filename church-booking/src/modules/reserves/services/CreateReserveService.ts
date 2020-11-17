@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import IReservesRepository from '../repositories/IReservesRepository';
 import IReserveGroupsRepository from '../repositories/IReserveGroupsRepository';
-import IWhatsappMessagesRepository from '../repositories/IWhatsappMessagesRepository';
+import IWhatsappMessagesRepository from '../../messages/repositories/IWhatsappMessagesRepository';
 
 interface IRequest {
   whatsapp: string;
@@ -21,7 +21,7 @@ class CreateReserveService {
     private reserveGroupsRepository: IReserveGroupsRepository,
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
-    @inject('WhatsappMessageRepository')
+    @inject('WhatsappMessagesRepository')
     private whatsappMessageRepository: IWhatsappMessagesRepository,
   ) {}
 
@@ -32,11 +32,14 @@ class CreateReserveService {
       throw new AppError('Event not exists');
     }
 
-    const reserves = await this.reservesRepository.index();
+    const reserves = await this.reservesRepository.findByEventId(event_id);
+    const eventReserves = reserves.length;
+
+    /*const reserves = await this.reservesRepository.index();
 
     const eventReserves = reserves.filter(
       reserve => reserve.reserve_group.event_id === event_id,
-    ).length;
+    ).length;*/
 
     if (eventReserves + names.length > event.max_reservations) {
       throw new AppError(

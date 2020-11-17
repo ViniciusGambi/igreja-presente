@@ -11,7 +11,7 @@ import {
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import Reserve from './Reserve';
-import WhatsappMessage from './WhatsappMessage';
+import WhatsappMessage from '@modules/messages/infra/typeorm/entities/WhatsappMessage';
 
 @Entity('reserve_groups')
 class ReserveGroup {
@@ -29,7 +29,7 @@ class ReserveGroup {
   event: Event;
 
   @OneToMany(() => Reserve, reserve => reserve.reserve_group)
-  reserve: Reserve;
+  reserves: Reserve[];
 
   @OneToMany(() => WhatsappMessage, whatsapp_message => whatsapp_message.reserve_group)
   whatsapp_messages: WhatsappMessage;

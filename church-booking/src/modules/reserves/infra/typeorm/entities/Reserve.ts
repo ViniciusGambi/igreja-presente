@@ -21,7 +21,7 @@ class Reserve {
   @Column()
   reserve_group_id: string;
 
-  @ManyToOne(() => ReserveGroup, reserve_group => reserve_group.reserve, {
+  @ManyToOne(() => ReserveGroup, reserve_group => reserve_group.reserves, {
     eager: true,
   })
   @JoinColumn({ name: 'reserve_group_id' })

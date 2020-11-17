@@ -6,6 +6,7 @@
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "server": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "dev:queue": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/services/queue.ts",
     "simple-test": "ts-node-dev src/tests/index.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "jest"

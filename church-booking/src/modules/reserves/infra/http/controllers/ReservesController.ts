@@ -3,7 +3,6 @@ import GetReservesByEventIdService from '@modules/reserves/services/GetReservesB
 import { container } from 'tsyringe';
 import UpdateReserveService from '@modules/reserves/services/UpdateReserveService';
 import CreateReserveService from '@modules/reserves/services/CreateReserveService';
-import whatsapi from '@shared/container/providers/WhatsApi/whatsapi';
 
 class ReservesController {
   public async listByEvent(
@@ -26,23 +25,6 @@ class ReservesController {
       event_id,
       whatsapp
     });
-
-    let content = `Oii! Está tudo okk com a sua reserva para o grupão de domingo! Uhuuul! Caso aconteça algum imprevisto só chamar aqui que desmarcamos e liberamos sua reserva para outra pessoa. Até lá!\n\n *As reservas que você fez:*`;
-
-    for (let i in names){
-      content += (`\n- ${names[i]}`);
-    }
-
-    try {
-      const message = whatsapi.post('/sendText', {
-        "args": {
-            "to": `${whatsapp}@c.us`,
-            "content": content,
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
 
     return response.json(reserve);
   }

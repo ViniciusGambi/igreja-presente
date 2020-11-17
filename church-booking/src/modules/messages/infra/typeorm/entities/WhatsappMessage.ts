@@ -1,4 +1,4 @@
-import ReserveGroup from "./ReserveGroup";
+import ReserveGroup from "@modules/reserves/infra/typeorm/entities/ReserveGroup";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -11,12 +11,15 @@ import {
 } from 'typeorm';
 
 @Entity('whatsapp_messages')
-class WhatsappMessage{
+class WhatsappMessage {
   @PrimaryGeneratedColumn()
   id: string;
 
   @Column()
   reserve_group_id: string;
+
+  @Column()
+  sent: boolean;
 
   @ManyToOne(() => ReserveGroup, reserve_group => reserve_group.whatsapp_messages, {
     eager: true,
