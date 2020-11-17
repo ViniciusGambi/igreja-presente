@@ -4,4 +4,5 @@ export default interface ICreateChurchDTO {
   url: string;
   email: string;
   password: string;
+  color?: string;
 }

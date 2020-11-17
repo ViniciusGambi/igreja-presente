@@ -31,6 +31,7 @@ describe('CreateChurch', () => {
       email: 'igreja@example.com',
       name: 'Igreja',
       password: 'senha',
+      color: '#fff',
       url: 'igreja',
     });
 
@@ -43,6 +44,7 @@ describe('CreateChurch', () => {
       email: 'igreja@example.com',
       name: 'Igreja',
       password: 'senha',
+      color: '#fff',
       url: 'igreja',
     });
 
@@ -52,6 +54,7 @@ describe('CreateChurch', () => {
         email: 'igreja@example.com',
         name: 'Igreja',
         password: 'senha',
+        color: '#fff',
         url: 'igreja',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -65,6 +68,7 @@ describe('CreateChurch', () => {
       email: 'igreja@example.com',
       name: 'Igreja',
       password: 'senha',
+      color: '#fff',
       url: 'igreja',
     });
 
@@ -79,6 +83,7 @@ describe('CreateChurch', () => {
       email: 'igreja@example.com',
       name: 'Igreja',
       password: 'senha',
+      color: '#fff',
       url: 'igreja',
     });
 

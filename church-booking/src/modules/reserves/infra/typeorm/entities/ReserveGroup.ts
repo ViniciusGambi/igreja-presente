@@ -11,6 +11,7 @@ import {
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import Reserve from './Reserve';
+import WhatsappMessage from './WhatsappMessage';
 
 @Entity('reserve_groups')
 class ReserveGroup {
@@ -29,6 +30,9 @@ class ReserveGroup {
 
   @OneToMany(() => Reserve, reserve => reserve.reserve_group)
   reserve: Reserve;
+
+  @OneToMany(() => WhatsappMessage, whatsapp_message => whatsapp_message.reserve_group)
+  whatsapp_messages: WhatsappMessage;
 
   @CreateDateColumn()
   created_at: Date;

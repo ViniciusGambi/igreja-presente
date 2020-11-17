@@ -29,6 +29,11 @@ export default class CreateChurchs1598380463327 implements MigrationInterface {
             isUnique: true,
           },
           {
+            name: 'color',
+            type: 'varchar',
+            default: '000',
+          },
+          {
             name: 'active',
             type: 'boolean',
             default: 'false',

@@ -37,6 +37,7 @@ describe('AuthenticateChurchService', () => {
       email: 'igreja@example.com',
       name: 'Igreja',
       password: 'hard-password',
+      color: '#fff',
       url: 'igreja',
     });
 
@@ -76,6 +77,7 @@ describe('AuthenticateChurchService', () => {
       email: 'igreja@example.com',
       name: 'Igreja',
       password: 'hard-password',
+      color: '#fff',
       url: 'igreja',
     });
 

@@ -29,6 +29,9 @@ class Church {
   event: Event;
 
   @Column()
+  color: string;
+
+  @Column()
   active: boolean;
 
   @CreateDateColumn()

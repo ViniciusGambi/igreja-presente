@@ -13,6 +13,7 @@ interface IRequest {
   url: string;
   email: string;
   password: string;
+  color: string;
 }
 
 @injectable()
@@ -34,6 +35,7 @@ class CreateChurchService {
     url,
     email,
     password,
+    color,
   }: IRequest): Promise<Church> {
     const emailExists = await this.churchsRepository.findByEmail(email);
 
@@ -49,6 +51,7 @@ class CreateChurchService {
       url,
       email,
       password: hashedPassword,
+      color
     });
 
     const { token } = await this.churchTokensRepository.generate(church.id);

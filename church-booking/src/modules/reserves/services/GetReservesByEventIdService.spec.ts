@@ -41,6 +41,7 @@ describe('GetReserveByEventId', () => {
 
     const reserveGroup1 = await fakeReserveGroupsRepository.create({
       event_id: event1.id,
+      whatsapp: '55439999999'
     });
 
     const reserve1 = await fakeReservesRepository.create({
@@ -62,6 +63,7 @@ describe('GetReserveByEventId', () => {
 
     const reserveGroup2 = await fakeReserveGroupsRepository.create({
       event_id: event2.id,
+      whatsapp: '55439999999'
     });
 
     const reserve3 = await fakeReservesRepository.create({

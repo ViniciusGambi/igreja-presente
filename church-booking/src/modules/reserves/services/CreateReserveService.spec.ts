@@ -44,6 +44,7 @@ describe('CreateReserveService', () => {
     const reserves = await createReserveService.execute({
       event_id: event.id,
       names: ['name1', 'name2'],
+      whatsapp: '55439999999'
     });
 
     expect(reserves[0]).toHaveProperty('id');
@@ -55,6 +56,7 @@ describe('CreateReserveService', () => {
       createReserveService.execute({
         event_id: 'non-existing-id',
         names: ['name1', 'name2'],
+        whatsapp: '55439999999'
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -78,12 +80,14 @@ describe('CreateReserveService', () => {
     await createReserveService.execute({
       event_id: event.id,
       names: ['name1', 'name2', 'name3', 'name4', 'name5'],
+      whatsapp: '55439999999'
     });
 
     await expect(
       createReserveService.execute({
         event_id: event.id,
         names: ['name6'],
+        whatsapp: '55439999999'
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

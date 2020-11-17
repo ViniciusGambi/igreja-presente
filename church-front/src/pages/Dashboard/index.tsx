@@ -20,6 +20,7 @@ interface EventProps {
 interface ChurchProps {
   id: string;
   name: string;
+  color: string;
 }
 
 const customStyles = {
@@ -86,9 +87,9 @@ const Dashboard: React.FC = () => {
 
   return church.name ? (
     <Container>
-      <Header churchName={church.name} color="#E12120" />
+      <Header churchName={church.name} color={`#${church.color}`} />
       <div>
-        <Title color="#E12120">
+        <Title color={`#${church.color}`}>
           <h1>Próximos Eventos</h1>
 
           <div />
@@ -98,7 +99,7 @@ const Dashboard: React.FC = () => {
             <Card
               key={event.id}
               event={event}
-              color="#E12120"
+              color={`#${church.color}`}
               onClick={() => {
                 openModal(event);
               }}

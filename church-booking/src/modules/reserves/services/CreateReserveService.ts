@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import IReservesRepository from '../repositories/IReservesRepository';
 import IReserveGroupsRepository from '../repositories/IReserveGroupsRepository';
+import IWhatsappMessagesRepository from '../repositories/IWhatsappMessagesRepository';
 
 interface IRequest {
   whatsapp: string;
@@ -20,6 +21,8 @@ class CreateReserveService {
     private reserveGroupsRepository: IReserveGroupsRepository,
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
+    @inject('WhatsappMessageRepository')
+    private whatsappMessageRepository: IWhatsappMessagesRepository,
   ) {}
 
   public async execute({ whatsapp, event_id, names }: IRequest): Promise<Reserve[]> {
@@ -57,6 +60,10 @@ class CreateReserveService {
         return createdReserve;
       }),
     );
+
+    const message = await this.whatsappMessageRepository.create({
+      reserve_group: reserveGroup
+    });
 
     return createdReserves;
   }

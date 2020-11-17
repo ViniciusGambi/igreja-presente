@@ -5,7 +5,7 @@ import { container } from 'tsyringe';
 
 class ChurchsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { id, name, url, email, password } = request.body;
+    const { id, name, url, email, password, color } = request.body;
 
     const createChurchService = container.resolve(CreateChurchService);
     const church = await createChurchService.execute({
@@ -14,6 +14,7 @@ class ChurchsController {
       url,
       email,
       password,
+      color
     });
 
     delete church.password;
@@ -30,6 +31,7 @@ class ChurchsController {
       id: church.id,
       name: church.name,
       url: church.url,
+      color: church.color
     });
   }
 }

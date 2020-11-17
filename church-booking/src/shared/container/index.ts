@@ -14,8 +14,11 @@ import ReservesRepository from '@modules/reserves/infra/typeorm/repositories/Res
 
 import IReserveGroupsRepository from '@modules/reserves/repositories/IReserveGroupsRepository';
 import ReserveGroupsRepository from '@modules/reserves/infra/typeorm/repositories/ReserveGroupsRepository';
+import IWhatsappMessageRepository from '@modules/reserves/repositories/IWhatsappMessageRepository';
 import ChurchTokensRepository from '@modules/churchs/infra/typeorm/repositories/ChurchTokensRepository';
 import IChurchTokensRepository from '@modules/churchs/repositories/IChurchTokensRepository';
+import WhatsappMessageRepository from '@modules/reserves/infra/typeorm/repositories/WhatsappMessageRepository';
+
 
 container.registerSingleton<IChurchsRepository>(
   'ChurchsRepository',
@@ -40,4 +43,9 @@ container.registerSingleton<IReservesRepository>(
 container.registerSingleton<IReserveGroupsRepository>(
   'ReserveGroupsRepository',
   ReserveGroupsRepository,
+);
+
+container.registerSingleton<IWhatsappMessageRepository>(
+  'WhatsappMessageRepository',
+  WhatsappMessageRepository,
 );

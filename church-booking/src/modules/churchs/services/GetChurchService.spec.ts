@@ -18,6 +18,7 @@ describe('GetChurch', () => {
       name: 'Igreja',
       password: 'senha',
       url: 'igreja',
+      color: '#fff'
     });
 
     const church = await getChurchService.execute('igreja');
