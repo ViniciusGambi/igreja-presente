@@ -16,6 +16,13 @@ class FakeReservesRepository implements IReservesRepository {
     return finded;
   }
 
+  public async findByReserveGroupId(reserve_group_id: string): Promise<Reserve[]>{
+    const reserves = this.reserves.filter(
+      reserve => reserve.reserve_group_id === reserve_group_id,
+    );
+    return reserves;
+  }
+
   public async findByEventId(event_id: string): Promise<Reserve[]> {
     const reserves = this.reserves.filter(
       reserve => reserve.reserve_group.event_id === event_id,

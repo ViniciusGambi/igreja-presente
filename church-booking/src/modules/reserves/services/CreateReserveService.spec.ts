@@ -1,5 +1,7 @@
 import FakeChurchsRepository from '@modules/churchs/repositories/fakes/FakeChurchsRepository';
 import FakeEventsRepository from '@modules/events/repositories/fakes/FakeEventsRepository';
+import WhatsappMessageRepository from '@modules/messages/infra/typeorm/repositories/WhatsappMessageRepository';
+import FakeWhatsappMessagesRepository from '@modules/messages/repositories/fakes/FakeWhatsappMessagesRepository';
 import AppError from '@shared/errors/AppError';
 import FakeReserveGroupsRepository from '../repositories/fakes/FakeReserveGroupsRepository';
 import FakeReservesRepository from '../repositories/fakes/FakeReservesRepository';
@@ -10,6 +12,7 @@ let fakeReservesRepository: FakeReservesRepository;
 let fakeReserveGroupsRepository: FakeReserveGroupsRepository;
 let fakeEventsRepository: FakeEventsRepository;
 let fakeChurchsRepository: FakeChurchsRepository;
+let fakeWhatsappMessagesRepository: FakeWhatsappMessagesRepository;
 
 describe('CreateReserveService', () => {
   beforeEach(() => {
@@ -17,11 +20,13 @@ describe('CreateReserveService', () => {
     fakeEventsRepository = new FakeEventsRepository();
     fakeReservesRepository = new FakeReservesRepository();
     fakeReserveGroupsRepository = new FakeReserveGroupsRepository();
+    fakeWhatsappMessagesRepository = new FakeWhatsappMessagesRepository();
 
     createReserveService = new CreateReserveService(
       fakeReservesRepository,
       fakeReserveGroupsRepository,
       fakeEventsRepository,
+      fakeWhatsappMessagesRepository
     );
   });
 
