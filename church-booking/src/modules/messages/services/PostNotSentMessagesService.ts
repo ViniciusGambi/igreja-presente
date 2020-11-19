@@ -38,7 +38,6 @@ class PostNotSentMessagesService {
       } catch (err) {}
       this.whatsappMessagesRepository.save({...message, sent: true});
     })
-    await new Promise(r => setTimeout(r, 5000));
   }
 
 }
