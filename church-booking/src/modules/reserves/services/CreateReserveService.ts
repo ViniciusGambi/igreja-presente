@@ -64,20 +64,19 @@ class CreateReserveService {
       reserve_group: reserveGroup
     });
 
-    let content = `Oii! Está tudo certo com a sua reserva para o ${message.reserve_group.event.name} do ${message.reserve_group.event.church.name} de ${getWeekDay(message.reserve_group.event.date.toString())} dia ${getFormatedDate(message.reserve_group.event.date.toString())}! Uhuuul! Caso aconteça algum imprevisto só chamar aqui que desmarcamos e liberamos sua reserva para outra pessoa. Até lá!\n\n *As reservas que você fez:*`;
+    let content = `Oii! Está tudo certo com a sua reserva para o ${event.name} do ${event.church.name} de ${getWeekDay(event.date.toString())} dia ${getFormatedDate(event.date.toString())}! Uhuuul! Caso aconteça algum imprevisto só chamar aqui que desmarcamos e liberamos sua reserva para outra pessoa. Até lá!\n\n *As reservas que você fez:*`;
 
     for (let i in names){
       content += (`\n- ${names[i]}`);
     }
 
     try {
-      const response = await whatsapi.post('/sendText', {
+      const response = whatsapi.post('/sendText', {
         "args": {
             "to": `${message.reserve_group.whatsapp}@c.us`,
             "content": content,
         }
       });
-
     } catch (err) {}
     //this.whatsappMessageRepository.save({...message, sent: true});
 
