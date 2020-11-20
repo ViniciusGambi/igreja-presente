@@ -9,7 +9,6 @@ async function main(){
   const postNotSentMessagesService = container.resolve(PostNotSentMessagesService);
   while (true) {
     await postNotSentMessagesService.execute();
-    console.log('restart queue')
   }
 }
 

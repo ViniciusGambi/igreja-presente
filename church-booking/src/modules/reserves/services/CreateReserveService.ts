@@ -5,6 +5,8 @@ import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import IReservesRepository from '../repositories/IReservesRepository';
 import IReserveGroupsRepository from '../repositories/IReserveGroupsRepository';
 import IWhatsappMessagesRepository from '../../messages/repositories/IWhatsappMessagesRepository';
+import whatsapi from '@modules/messages/infra/providers/WhatsApi/whatsapi';
+import { getFormatedDate, getWeekDay } from '@shared/utils/date';
 
 interface IRequest {
   whatsapp: string;
@@ -35,11 +37,6 @@ class CreateReserveService {
     const reserves = await this.reservesRepository.findByEventId(event_id);
     const eventReserves = reserves.length;
 
-    /*const reserves = await this.reservesRepository.index();
-
-    const eventReserves = reserves.filter(
-      reserve => reserve.reserve_group.event_id === event_id,
-    ).length;*/
 
     if (eventReserves + names.length > event.max_reservations) {
       throw new AppError(
@@ -55,7 +52,6 @@ class CreateReserveService {
     const createdReserves = await Promise.all(
       names.map(async name => {
         const createdReserve = await this.reservesRepository.create({
-          // reserve_group_id: reserveGroup.id,
           reserve_group: reserveGroup,
           name,
         });
@@ -67,6 +63,23 @@ class CreateReserveService {
     const message = await this.whatsappMessageRepository.create({
       reserve_group: reserveGroup
     });
+
+    let content = `Oii! Está tudo certo com a sua reserva para o ${message.reserve_group.event.name} do ${message.reserve_group.event.church.name} de ${getWeekDay(message.reserve_group.event.date.toString())} dia ${getFormatedDate(message.reserve_group.event.date.toString())}! Uhuuul! Caso aconteça algum imprevisto só chamar aqui que desmarcamos e liberamos sua reserva para outra pessoa. Até lá!\n\n *As reservas que você fez:*`;
+
+    for (let i in names){
+      content += (`\n- ${names[i]}`);
+    }
+
+    try {
+      const response = await whatsapi.post('/sendText', {
+        "args": {
+            "to": `${message.reserve_group.whatsapp}@c.us`,
+            "content": content,
+        }
+      });
+
+    } catch (err) {}
+    //this.whatsappMessageRepository.save({...message, sent: true});
 
     return createdReserves;
   }
